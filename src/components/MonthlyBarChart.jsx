@@ -33,7 +33,11 @@ const MonthlyBarChart = ({ expenses }) => {
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="amount" />
+                <Bar
+                    dataKey="amount"
+                    fill="#00C49F"
+                    radius={[8, 8, 0, 0]}
+                />
             </BarChart>
         </ResponsiveContainer>
     );
