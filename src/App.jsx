@@ -23,6 +23,7 @@ function App() {
         {/* Wildcard redirect to dashboard */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
     </BrowserRouter>
   );
 }

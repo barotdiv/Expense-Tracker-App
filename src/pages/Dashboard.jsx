@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import CategoryPieChart from "../components/CategoryPieChart";
+import MonthlyBarChart from "../components/MonthlyBarChart";
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import StatsGrid from '../components/StatsGrid';
@@ -106,10 +108,10 @@ function Dashboard() {
 
       <div className="app-container animate-fadein">
         {/* Header section */}
-        <Header 
-          expenseCount={expenses.length} 
-          username={user?.username} 
-          onLogout={handleLogout} 
+        <Header
+          expenseCount={expenses.length}
+          username={user?.username}
+          onLogout={handleLogout}
         />
 
         {error && (
@@ -119,10 +121,10 @@ function Dashboard() {
         )}
 
         {/* Dashboard overview stats: Budget, Spent, Remaining */}
-        <StatsGrid 
-          expenses={expenses} 
-          budget={budget} 
-          onSetBudget={handleSetBudget} 
+        <StatsGrid
+          expenses={expenses}
+          budget={budget}
+          onSetBudget={handleSetBudget}
         />
 
         {/* Core Workspace */}
@@ -135,12 +137,16 @@ function Dashboard() {
 
           {/* Right column: Search, Filter, Sort, and Expense List */}
           <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
-            <ExpenseList 
-              expenses={expenses} 
-              onDeleteExpense={handleDeleteExpense} 
+            <ExpenseList
+              expenses={expenses}
+              onDeleteExpense={handleDeleteExpense}
             />
           </div>
         </main>
+        <div className="analytics-section">
+          <CategoryPieChart expenses={expenses} />
+          <MonthlyBarChart expenses={expenses} />
+        </div>
 
         {/* Footer */}
         <footer className="app-footer">
@@ -152,3 +158,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
