@@ -1,6 +1,6 @@
 import authService from './authService';
 
-const API_URL = 'http://localhost:5000/api/expenses';
+const API_URL = '/api/expenses';
 
 const handleResponse = async (response) => {
   const data = await response.json();
