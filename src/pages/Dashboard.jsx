@@ -9,6 +9,7 @@ import ExpenseList from '../components/ExpenseList';
 import CategoryBreakdown from '../components/CategoryBreakdown';
 import authService from '../services/authService';
 import expenseService from '../services/expenseService';
+import AiExpenseSuggestion from '../components/AiExpenseSuggestion';
 
 function Dashboard() {
   const [expenses, setExpenses] = useState([]);
@@ -133,6 +134,7 @@ function Dashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <ExpenseForm onAddExpense={handleAddExpense} />
             <CategoryBreakdown expenses={expenses} />
+            <AiExpenseSuggestion expenses={expenses} budget={budget} />
           </div>
 
           {/* Right column: Search, Filter, Sort, and Expense List */}

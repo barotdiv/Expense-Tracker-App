@@ -1,0 +1,187 @@
+.ai-suggestion-card {
+  background: linear-gradient(145deg, var(--bg-card) 0%, rgba(255,255,255,0.6) 100%);
+  border-top: 3px solid var(--primary);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ai-suggestion-card {
+    background: linear-gradient(145deg, var(--bg-card) 0%, rgba(17, 20, 28, 0.9) 100%);
+  }
+}
+
+.ai-icon-pulse {
+  display: inline-block;
+  animation: pulse 2s infinite;
+  text-shadow: 0 0 10px var(--primary);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.ai-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.insight-section {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: var(--border-radius-sm);
+  padding: 1rem;
+  border: 1px solid var(--border-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .insight-section {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.insight-section:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.insight-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-main);
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+.summary-label {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.summary-value {
+  font-weight: 700;
+}
+.highlight-bad { color: var(--accent); }
+.highlight-good { color: var(--secondary); }
+
+.insight-list {
+  list-style: none;
+  padding-left: 0.5rem;
+}
+
+.insight-list li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.insight-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.tips-list li::before {
+  content: '💡';
+  font-size: 0.75rem;
+}
+
+.recommendation-box {
+  text-align: center;
+  background: rgba(99, 102, 241, 0.05);
+  border-radius: var(--border-radius-sm);
+  padding: 1rem;
+}
+
+.recommendation-box p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.recommended-amount {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0.5rem 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.recommendation-subtext {
+  font-size: 0.75rem !important;
+  font-style: italic;
+}
+
+/* Circular Progress Chart */
+.health-score-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.circular-chart {
+  display: block;
+  margin: 0;
+  width: 100px;
+  height: 100px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: var(--border-card);
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  animation: progress 1.5s ease-out forwards;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}
+
+.percentage {
+  fill: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.score-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  flex: 1;
+  line-height: 1.4;
+}
