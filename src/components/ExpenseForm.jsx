@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { CATEGORIES } from '../constants/categories';
 
+const DESCRIPTION_SUGGESTIONS = {
+  food: ['Groceries', 'Restaurant', 'Coffee', 'Snacks'],
+  transport: ['Gas', 'Uber/Lyft', 'Transit', 'Car Repair'],
+  shopping: ['Clothing', 'Electronics', 'Home Goods', 'Gifts'],
+  utilities: ['Electricity', 'Water', 'Internet', 'Phone'],
+  entertainment: ['Movies', 'Concert', 'Video Games', 'Streaming'],
+  health: ['Doctor', 'Pharmacy', 'Gym', 'Dentist'],
+  education: ['Tuition', 'Books', 'Course', 'Supplies'],
+  others: ['Donation', 'Pet', 'Misc', 'Personal Care'],
+};
+
 function ExpenseForm({ onAddExpense }) {
   const getTodayDateString = () => {
     const today = new Date();
@@ -56,6 +67,29 @@ function ExpenseForm({ onAddExpense }) {
             required
             maxLength={60}
           />
+          {/* AI Suggestions for Description based on Category */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', alignSelf: 'center' }}>💡 Suggestions:</span>
+            {DESCRIPTION_SUGGESTIONS[category]?.map((suggestion, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setTitle(suggestion)}
+                style={{
+                  fontSize: '0.75rem',
+                  padding: '0.2rem 0.6rem',
+                  borderRadius: '12px',
+                  border: '1px solid var(--border-card, #e2e8f0)',
+                  backgroundColor: title === suggestion ? 'var(--primary, #3b82f6)' : 'var(--bg-secondary, #f8fafc)',
+                  color: title === suggestion ? '#fff' : 'var(--text-main, #1e293b)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Amount Input */}

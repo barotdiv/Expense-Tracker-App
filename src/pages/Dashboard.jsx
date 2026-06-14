@@ -67,6 +67,19 @@ function Dashboard() {
     }
   };
 
+  const handleEditExpense = async (id, updatedAmount) => {
+    try {
+      const expenseToUpdate = expenses.find((exp) => exp.id === id);
+      if (!expenseToUpdate) return;
+      const updatedData = { ...expenseToUpdate, amount: parseFloat(updatedAmount) };
+      const updated = await expenseService.updateExpense(id, updatedData);
+      setExpenses((prevExpenses) => prevExpenses.map(item => item.id === id ? updated : item));
+    } catch (err) {
+      console.error('Failed to update expense:', err);
+      alert('Failed to update expense. Please try again.');
+    }
+  };
+
   const handleSetBudget = async (newBudget) => {
     try {
       const updatedBudget = await authService.updateBudget(newBudget);
@@ -142,6 +155,7 @@ function Dashboard() {
             <ExpenseList
               expenses={expenses}
               onDeleteExpense={handleDeleteExpense}
+              onEditExpense={handleEditExpense}
             />
           </div>
         </main>

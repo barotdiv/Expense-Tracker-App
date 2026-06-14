@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { CATEGORIES, getCategoryById } from '../constants/categories';
 
-function ExpenseList({ expenses, onDeleteExpense }) {
+function ExpenseList({ expenses, onDeleteExpense, onEditExpense }) {
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [sortBy, setSortBy] = useState('date-desc'); // date-desc, date-asc, amount-desc, amount-asc
+
+  const [editingId, setEditingId] = useState(null);
+  const [editAmount, setEditAmount] = useState('');
 
   // 1. Filter expenses
   const filteredExpenses = expenses.filter((item) => {
@@ -126,18 +129,66 @@ function ExpenseList({ expenses, onDeleteExpense }) {
                   </div>
                 </div>
 
-                <div className="expense-info-right">
-                  <span className="expense-amount">
-                    {formatCurrency(item.amount)}
-                  </span>
-                  <button
-                    onClick={() => onDeleteExpense(item.id)}
-                    className="btn-delete"
-                    title="Delete expense"
-                    aria-label={`Delete expense: ${item.title}`}
-                  >
-                    🗑️
-                  </button>
+                <div className="expense-info-right" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  {editingId === item.id ? (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                      <input
+                        type="number"
+                        value={editAmount}
+                        onChange={(e) => setEditAmount(e.target.value)}
+                        style={{ width: '80px', padding: '0.3rem', borderRadius: '4px', border: '1px solid var(--border-card, #ccc)', background: 'var(--bg-main)', color: 'var(--text-main)' }}
+                        min="0.01"
+                        step="any"
+                        autoFocus
+                      />
+                      <button
+                        onClick={() => {
+                          if (editAmount && parseFloat(editAmount) > 0) {
+                            onEditExpense(item.id, editAmount);
+                            setEditingId(null);
+                          }
+                        }}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', padding: '0.2rem' }}
+                        title="Save amount"
+                      >
+                        ✅
+                      </button>
+                      <button
+                        onClick={() => setEditingId(null)}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', padding: '0.2rem' }}
+                        title="Cancel edit"
+                      >
+                        ❌
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="expense-amount">
+                        {formatCurrency(item.amount)}
+                      </span>
+                      <button
+                        onClick={() => {
+                          setEditingId(item.id);
+                          setEditAmount(item.amount);
+                        }}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', padding: '0.2rem', opacity: 0.7 }}
+                        onMouseOver={(e) => e.currentTarget.style.opacity = 1}
+                        onMouseOut={(e) => e.currentTarget.style.opacity = 0.7}
+                        title="Edit amount"
+                        aria-label={`Edit expense amount: ${item.title}`}
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => onDeleteExpense(item.id)}
+                        className="btn-delete"
+                        title="Delete expense"
+                        aria-label={`Delete expense: ${item.title}`}
+                      >
+                        🗑️
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             );
