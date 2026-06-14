@@ -145,10 +145,18 @@ function Dashboard() {
             />
           </div>
         </main>
-        <div className="analytics-section">
-          <CategoryPieChart expenses={expenses} />
-          <MonthlyBarChart expenses={expenses} />
-        </div>
+
+        {/* Analytics Section */}
+        <section className="analytics-section" style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <h2 className="card-title" style={{ borderBottom: '1px solid var(--border-card)', paddingBottom: '0.75rem' }}>
+            <span>📈</span> Analytics & Insights
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+            <CategoryPieChart expenses={expenses} />
+            <MonthlyBarChart expenses={expenses} />
+          </div>
+        </section>
+
 
         {/* Footer */}
         <footer className="app-footer">
