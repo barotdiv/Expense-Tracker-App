@@ -3,7 +3,7 @@ import CategoryPieChart from "../components/CategoryPieChart";
 import MonthlyBarChart from "../components/MonthlyBarChart";
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import StatsGrid from '../components/StatsGrid';
+import BudgetManager from '../components/BudgetManager';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
 import CategoryBreakdown from '../components/CategoryBreakdown';
@@ -80,15 +80,7 @@ function Dashboard() {
     }
   };
 
-  const handleSetBudget = async (newBudget) => {
-    try {
-      const updatedBudget = await authService.updateBudget(newBudget);
-      setBudget(updatedBudget);
-    } catch (err) {
-      console.error('Failed to update budget:', err);
-      alert('Failed to update budget. Please try again.');
-    }
-  };
+
 
   const handleLogout = () => {
     authService.logout();
@@ -135,10 +127,9 @@ function Dashboard() {
         )}
 
         {/* Dashboard overview stats: Budget, Spent, Remaining */}
-        <StatsGrid
+        <BudgetManager
           expenses={expenses}
-          budget={budget}
-          onSetBudget={handleSetBudget}
+          onBudgetChange={setBudget}
         />
 
         {/* Core Workspace */}
