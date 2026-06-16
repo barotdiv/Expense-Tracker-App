@@ -6,7 +6,7 @@ import authRoutes from './routes/authRoutes.js';
 import expenseRoutes from './routes/expenseRoutes.js';
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: '../.env' });
 
 // Connect database
 connectDB();
