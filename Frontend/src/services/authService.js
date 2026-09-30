@@ -26,14 +26,14 @@ const authService = {
     }
   },
 
-  async register(name, email, password) {
+  async register(username, email, password) {
     try {
       const response = await fetch(`${API_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ username, name: username, email, password }),
       });
 
       const data = await response.json();

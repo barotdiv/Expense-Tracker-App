@@ -1,7 +1,7 @@
 import express from 'express';
 import { register, login, getMe, updateBudget } from '../controllers/authController.js';
 import auth from '../middleware/auth.js';
-
+import {Router} from 'express';
 const router = express.Router();
 
 router.post('/register', register);

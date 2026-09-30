@@ -3,13 +3,19 @@ import authService from './authService';
 const API_URL = '/api/expenses';
 
 const handleResponse = async (response) => {
-  const data = await response.json();
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    data = { message: response.statusText || `Server returned error (${response.status})` };
+  }
+
   if (!response.ok) {
     if (response.status === 401) {
       authService.logout();
       window.location.href = '/login';
     }
-    throw new Error(data.message || 'API request failed');
+    throw new Error(data.message || `API request failed with status ${response.status}`);
   }
   return data;
 };
