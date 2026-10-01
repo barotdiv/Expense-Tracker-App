@@ -679,3 +679,10 @@
   background-color: rgba(244, 63, 94, 0.05);
 }
 
+.theme-toggle-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+

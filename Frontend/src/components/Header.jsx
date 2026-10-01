@@ -1,4 +1,5 @@
 import React from 'react';
+import ThemeToggle from './ThemeToggle';
 
 function Header({ expenseCount, username, onLogout }) {
   return (
@@ -12,7 +13,8 @@ function Header({ expenseCount, username, onLogout }) {
           <p className="subtitle">Track your wealth, filter details & manage budgets</p>
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <ThemeToggle />
         {username && (
           <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)' }}>
             👤 Welcome, <span style={{ color: 'var(--primary)' }}>{username}</span>

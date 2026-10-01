@@ -1,5 +1,6 @@
-:root {
-  /* Color Palette - Premium Violet & Emerald theme */
+/* Light Theme Variables */
+:root,
+:root[data-theme="light"] {
   --primary: #6366f1; /* Indigo */
   --primary-hover: #4f46e5;
   --secondary: #10b981; /* Emerald */
@@ -8,17 +9,17 @@
   --accent-hover: #e11d48;
   
   --bg-app: #f8fafc;
-  --bg-card: rgba(255, 255, 255, 0.85);
-  --bg-card-hover: rgba(255, 255, 255, 0.95);
-  --border-card: rgba(226, 232, 240, 0.8);
-  --text-main: #1e293b;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-hover: rgba(255, 255, 255, 1);
+  --border-card: rgba(226, 232, 240, 0.9);
+  --text-main: #0f172a;
   --text-muted: #64748b;
   --text-white: #ffffff;
   
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 20px 25px -5px rgba(99, 102, 241, 0.08), 0 8px 10px -6px rgba(99, 102, 241, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(99, 102, 241, 0.1), 0 8px 10px -6px rgba(99, 102, 241, 0.08);
 
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --border-radius-sm: 8px;
@@ -26,27 +27,27 @@
   --border-radius-lg: 24px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: #818cf8;
-    --primary-hover: #6366f1;
-    --secondary: #34d399;
-    --secondary-hover: #10b981;
-    --accent: #fb7185;
-    --accent-hover: #f43f5e;
-    
-    --bg-app: #090a0f;
-    --bg-card: rgba(17, 20, 28, 0.75);
-    --bg-card-hover: rgba(23, 27, 38, 0.85);
-    --border-card: rgba(255, 255, 255, 0.06);
-    --text-main: #f1f5f9;
-    --text-muted: #94a3b8;
-    
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.45), 0 4px 6px -4px rgba(0, 0, 0, 0.35);
-    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-  }
+/* Dark Theme Variables */
+:root[data-theme="dark"] {
+  --primary: #818cf8;
+  --primary-hover: #6366f1;
+  --secondary: #34d399;
+  --secondary-hover: #10b981;
+  --accent: #fb7185;
+  --accent-hover: #f43f5e;
+  
+  --bg-app: #090a0f;
+  --bg-card: rgba(17, 20, 28, 0.75);
+  --bg-card-hover: rgba(23, 27, 38, 0.85);
+  --border-card: rgba(255, 255, 255, 0.08);
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-white: #ffffff;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.45), 0 4px 6px -4px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
 * {

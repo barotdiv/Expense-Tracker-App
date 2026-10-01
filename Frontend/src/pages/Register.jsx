@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, clearAuthError } from '../store/authSlice';
+import ThemeToggle from '../components/ThemeToggle';
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -55,6 +56,10 @@ function Register() {
       <div className="gradient-bg" aria-hidden="true">
         <div className="gradient-blob-1"></div>
         <div className="gradient-blob-2"></div>
+      </div>
+
+      <div style={{ position: 'fixed', top: '1.25rem', right: '1.25rem', zIndex: 100 }}>
+        <ThemeToggle />
       </div>
 
       <div className="auth-container">
