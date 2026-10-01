@@ -1,56 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import CategoryPieChart from "../components/CategoryPieChart";
 import MonthlyBarChart from "../components/MonthlyBarChart";
-import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import BudgetManager from '../components/BudgetManager';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
 import CategoryBreakdown from '../components/CategoryBreakdown';
-import authService from '../services/authService';
-import expenseService from '../services/expenseService';
 import AiExpenseSuggestion from '../components/AiExpenseSuggestion';
+import { fetchCurrentUser, logout, updateUserBudget, setBudget } from '../store/authSlice';
+import { fetchExpenses, addExpense, deleteExpense, editExpense } from '../store/expenseSlice';
 
 function Dashboard() {
-  const [expenses, setExpenses] = useState([]);
-  const [budget, setBudget] = useState(2000);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { user, budget, loading: authLoading, error: authError } = useSelector((state) => state.auth);
+  const { items: expenses, loading: expensesLoading, error: expensesError } = useSelector((state) => state.expenses);
+
+  const loading = (authLoading || expensesLoading) && expenses.length === 0;
+  const error = authError || expensesError;
+
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        // Load profile first to get budget info
-        const profile = await authService.getMe();
-        setUser(profile);
-        setBudget(profile.budget || 2000);
-
-        // Load expenses
-        const expenseList = await expenseService.getExpenses();
-        setExpenses(expenseList);
-      } catch (err) {
-        console.error('Failed to load dashboard data:', err);
-        setError('Failed to fetch data from the server.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
+    dispatch(fetchCurrentUser());
+    dispatch(fetchExpenses());
+  }, [dispatch]);
 
   const handleAddExpense = async (newExpenseData) => {
     try {
-      const created = await expenseService.createExpense({
+      await dispatch(addExpense({
         title: newExpenseData.title,
         amount: newExpenseData.amount,
         category: newExpenseData.category,
         date: newExpenseData.date
-      });
-      setExpenses((prevExpenses) => [created, ...prevExpenses]);
+      })).unwrap();
     } catch (err) {
       console.error('Failed to add expense:', err);
       alert('Failed to add expense. Please try again.');
@@ -59,8 +43,7 @@ function Dashboard() {
 
   const handleDeleteExpense = async (id) => {
     try {
-      await expenseService.deleteExpense(id);
-      setExpenses((prevExpenses) => prevExpenses.filter((item) => item.id !== id));
+      await dispatch(deleteExpense(id)).unwrap();
     } catch (err) {
       console.error('Failed to delete expense:', err);
       alert('Failed to delete expense. Please try again.');
@@ -72,18 +55,20 @@ function Dashboard() {
       const expenseToUpdate = expenses.find((exp) => exp.id === id);
       if (!expenseToUpdate) return;
       const updatedData = { ...expenseToUpdate, amount: parseFloat(updatedAmount) };
-      const updated = await expenseService.updateExpense(id, updatedData);
-      setExpenses((prevExpenses) => prevExpenses.map(item => item.id === id ? updated : item));
+      await dispatch(editExpense({ id, updatedData })).unwrap();
     } catch (err) {
       console.error('Failed to update expense:', err);
       alert('Failed to update expense. Please try again.');
     }
   };
 
-
+  const handleBudgetChange = (newBudget) => {
+    dispatch(setBudget(newBudget));
+    dispatch(updateUserBudget(newBudget));
+  };
 
   const handleLogout = () => {
-    authService.logout();
+    dispatch(logout());
     navigate('/login', { replace: true });
   };
 
@@ -129,7 +114,7 @@ function Dashboard() {
         {/* Dashboard overview stats: Budget, Spent, Remaining */}
         <BudgetManager
           expenses={expenses}
-          onBudgetChange={setBudget}
+          onBudgetChange={handleBudgetChange}
         />
 
         {/* Core Workspace */}

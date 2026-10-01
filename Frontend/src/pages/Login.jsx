@@ -1,33 +1,36 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import authService from '../services/authService';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, clearAuthError } from '../store/authSlice';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [validationError, setValidationError] = useState('');
+  
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading, error: authError } = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setValidationError('');
+    dispatch(clearAuthError());
 
     if (!email || !password) {
-      setError('Please fill in all fields.');
+      setValidationError('Please fill in all fields.');
       return;
     }
 
-    setLoading(true);
     try {
-      await authService.login(email, password);
+      await dispatch(loginUser({ email, password })).unwrap();
       navigate('/', { replace: true });
-    } catch (err) {
-      setError(err.message || 'Failed to login. Please check your credentials.');
-    } finally {
-      setLoading(false);
+    } catch {
+      // Error is stored in authError from redux state
     }
   };
+
+  const error = validationError || authError;
 
   return (
     <>

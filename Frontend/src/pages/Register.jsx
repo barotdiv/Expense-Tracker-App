@@ -1,50 +1,53 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import authService from '../services/authService';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser, clearAuthError } from '../store/authSlice';
 
 function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [validationError, setValidationError] = useState('');
+  
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading, error: authError } = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setValidationError('');
+    dispatch(clearAuthError());
 
     if (!username || !email || !password || !confirmPassword) {
-      setError('Please fill in all fields.');
+      setValidationError('Please fill in all fields.');
       return;
     }
 
     if (username.length < 3) {
-      setError('Username must be at least 3 characters.');
+      setValidationError('Username must be at least 3 characters.');
       return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
+      setValidationError('Password must be at least 6 characters.');
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setValidationError('Passwords do not match.');
       return;
     }
 
-    setLoading(true);
     try {
-      await authService.register(username, email, password);
+      await dispatch(registerUser({ username, email, password })).unwrap();
       navigate('/', { replace: true });
-    } catch (err) {
-      setError(err.message || 'Failed to register. Please try again.');
-    } finally {
-      setLoading(false);
+    } catch {
+      // Error is captured in authError from redux state
     }
   };
+
+  const error = validationError || authError;
 
   return (
     <>
