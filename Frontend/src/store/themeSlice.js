@@ -10,7 +10,6 @@ const getInitialTheme = () => {
   }
   return 'dark'; // Default to modern dark theme
 };
-
 const initialTheme = getInitialTheme();
 if (typeof document !== 'undefined') {
   document.documentElement.setAttribute('data-theme', initialTheme);
